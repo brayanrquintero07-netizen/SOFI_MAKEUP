@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marca Internacional</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#fff0f6,#ffe4ec,#fff5f9);
+background-size:400% 400%;
+animation:fondoPremium 8s ease infinite;
+}
+
+/* Fondo animado rosado profesional */
+@keyframes fondoPremium{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* ===== SLIDER AUTOMÁTICO ===== */
+.hero{
+position:relative;
+height:90vh;
+overflow:hidden;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transition:opacity 1.5s ease;
+}
+
+.slide.active{
+opacity:1;
+}
+
+.hero button{
+position:absolute;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+padding:15px 40px;
+border:none;
+border-radius:30px;
+background:#ff69b4;
+color:white;
+font-size:18px;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(255,105,180,0.4);
+transition:0.3s;
+}
+.hero button:hover{
+background:#ff1493;
+}
+
+/* ===== CATEGORÍAS ===== */
+.categorias{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:35px;
+padding:50px 20px;
+animation:fadeUp 1s ease;
+}
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.categoria{text-align:center;cursor:pointer;}
+.categoria img{
+width:120px;height:120px;border-radius:50%;
+object-fit:cover;
+border:4px solid #ff69b4;
+transition:0.4s;
+}
+.categoria img:hover{
+transform:scale(1.1);
+box-shadow:0 10px 30px rgba(255,105,180,0.4);
+}
+.categoria p{font-weight:bold;color:#c71585;}
+
+/* ===== CATÁLOGO PREMIUM ===== */
+.productos{
+display:flex;
+overflow-x:auto;
+gap:25px;
+padding:30px;
+scroll-behavior:smooth;
+}
+.producto{
+min-width:240px;
+background:white;
+padding:18px;
+border-radius:25px;
+box-shadow:0 15px 35px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+}
+.producto:hover{
+transform:translateY(-5px);
+}
+.producto img{
+width:100%;
+border-radius:20px;
+}
+.producto button{
+margin-top:10px;
+padding:10px 18px;
+border:none;
+border-radius:25px;
+background:#ff69b4;
+color:white;
+cursor:pointer;
+}
+
+/* ===== CARRITO PREMIUM ===== */
+.carrito-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff1493;
+color:white;
+border:none;
+border-radius:50px;
+padding:15px 20px;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(0,0,0,0.3);
+transition:transform 0.2s;
+}
+.carrito-btn:hover{transform:scale(1.1);}
+
+.contador{
+background:white;
+color:#ff1493;
+border-radius:50%;
+padding:3px 8px;
+margin-left:8px;
+font-weight:bold;
+animation:pop 0.3s ease;
+}
+@keyframes pop{
+0%{transform:scale(0.5)}
+100%{transform:scale(1)}
+}
+
+/* Modal carrito elegante */
+.carrito-modal{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 20px 50px rgba(0,0,0,0.4);
+width:90%;
+max-width:400px;
+z-index:1000;
+}
+
+/* WhatsApp */
+.whatsapp{
+position:fixed;
+bottom:90px;
+right:20px;
+background:#25d366;
+color:white;
+padding:15px;
+border-radius:50%;
+text-decoration:none;
+font-size:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Admin */
+.admin-panel{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:25px;
+border-radius:25px;
+box-shadow:0 20px 50px rgba(0,0,0,0.4);
+z-index:2000;
+width:90%;
+max-width:400px;
+}
+.admin-panel input,.admin-panel select{
+width:100%;
+margin-bottom:10px;
+padding:8px;
+}
+.admin-panel button{
+width:100%;
+padding:10px;
+background:#ff69b4;
+border:none;
+color:white;
+border-radius:15px;
+cursor:pointer;
+}
+.lista-admin div{
+display:flex;
+justify-content:space-between;
+margin-bottom:5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SLIDER -->
+<section class="hero">
+<div class="slide active" style="background-image:url('SOFI__MAKEUP.jpeg')"></div>
+<div class="slide" style="background-image:url('SOFI__MAKEUP.jpeg')"></div>
+<button onclick="irCategorias()">Comprar Ahora</button>
+</section>
+
+<section class="categorias" id="categorias">
+<div class="categoria" onclick="mostrarProductos('BLOOMSHELL')"><img src="https://via.placeholder.com/150"><p>BLOOMSHELL</p></div>
+<div class="categoria" onclick="mostrarProductos('ATENEA')"><img src="https://via.placeholder.com/150"><p>ATENEA</p></div>
+<div class="categoria" onclick="mostrarProductos('ANI-K')"><img src="https://via.placeholder.com/150"><p>ANI-K</p></div>
+<div class="categoria" onclick="mostrarProductos('MONTOC')"><img src="https://via.placeholder.com/150"><p>MONTOC</p></div>
+</section>
+
+<section class="productos" id="productos"></section>
+
+<button class="carrito-btn" onclick="abrirCarrito()">🛒 <span class="contador" id="contador">0</span></button>
+<a class="whatsapp" onclick="enviarWhatsApp()">💬</a>
+
+<div class="carrito-modal" id="carritoModal">
+<h3>Tu Carrito</h3>
+<div id="listaCarrito"></div>
+<p><strong>Total: $<span id="totalCarrito">0</span></strong></p>
+<button onclick="cerrarCarrito()">Cerrar</button>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+<h3>Panel Admin</h3>
+<input type="text" id="nombreProd" placeholder="Nombre">
+<input type="number" id="precioProd" placeholder="Precio">
+<select id="categoriaProd">
+<option>BLOOMSHELL</option>
+<option>ATENEA</option>
+<option>ANI-K</option>
+<option>MONTOC</option>
+</select>
+<input type="file" id="imagenProd">
+<button onclick="agregarProducto()">Agregar</button>
+<div class="lista-admin" id="listaAdmin"></div>
+<button onclick="cerrarAdmin()">Cerrar</button>
+</div>
+
+<script>
+let carrito=JSON.parse(localStorage.getItem("carrito"))||[];
+let productos=JSON.parse(localStorage.getItem("productos"))||[];
+actualizarContador();
+
+/* Slider automático */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+setInterval(()=>{
+slides[index].classList.remove("active");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+},4000);
+
+function irCategorias(){
+document.getElementById("categorias").scrollIntoView({behavior:"smooth"});
+}
+
+function mostrarProductos(cat){
+let cont=document.getElementById("productos");
+cont.innerHTML="";
+productos.filter(p=>p.categoria===cat).forEach(p=>{
+cont.innerHTML+=`
+<div class="producto">
+<img src="${p.imagen}">
+<h4>${p.nombre}</h4>
+<p>$${p.precio}</p>
+<button onclick="agregarCarrito('${p.nombre}',${p.precio})">Agregar</button>
+</div>`;
+});
+}
+
+function agregarCarrito(n,p){
+carrito.push({nombre:n,precio:p});
+localStorage.setItem("carrito",JSON.stringify(carrito));
+actualizarContador();
+}
+
+function actualizarContador(){
+document.getElementById("contador").innerText=carrito.length;
+}
+
+function abrirCarrito(){
+let lista=document.getElementById("listaCarrito");
+lista.innerHTML="";
+let total=0;
+carrito.forEach(p=>{
+lista.innerHTML+=`<p>${p.nombre} - $${p.precio}</p>`;
+total+=p.precio;
+});
+document.getElementById("totalCarrito").innerText=total;
+document.getElementById("carritoModal").style.display="block";
+}
+
+function cerrarCarrito(){
+document.getElementById("carritoModal").style.display="none";
+}
+
+function enviarWhatsApp(){
+let mensaje="Hola quiero pedir:%0A";
+let total=0;
+carrito.forEach(p=>{
+mensaje+=p.nombre+" - $"+p.precio+"%0A";
+total+=p.precio;
+});
+mensaje+="Total: $"+total;
+window.open("https://wa.me/573105708787?text="+mensaje);
+}
+
+/* Admin oculto */
+document.addEventListener("keydown",function(e){
+if(e.ctrlKey && e.key==="a"){
+let pass=prompt("Contraseña:");
+if(pass==="sofi07"){
+document.getElementById("adminPanel").style.display="block";
+mostrarListaAdmin();
+}
+}
+});
+
+function agregarProducto(){
+let nombre=document.getElementById("nombreProd").value;
+let precio=document.getElementById("precioProd").value;
+let categoria=document.getElementById("categoriaProd").value;
+let file=document.getElementById("imagenProd").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+productos.push({nombre,precio:parseInt(precio),categoria,imagen:e.target.result});
+localStorage.setItem("productos",JSON.stringify(productos));
+mostrarListaAdmin();
+};
+reader.readAsDataURL(file);
+}
+
+function mostrarListaAdmin(){
+let lista=document.getElementById("listaAdmin");
+lista.innerHTML="";
+productos.forEach((p,i)=>{
+lista.innerHTML+=`
+<div>
+<span>${p.nombre}</span>
+<button onclick="eliminarProducto(${i})">❌</button>
+</div>`;
+});
+}
+
+function eliminarProducto(i){
+productos.splice(i,1);
+localStorage.setItem("productos",JSON.stringify(productos));
+mostrarListaAdmin();
+}
+
+function cerrarAdmin(){
+document.getElementById("adminPanel").style.display="none";
+}
+</script>
+
+</body>
+</html>
